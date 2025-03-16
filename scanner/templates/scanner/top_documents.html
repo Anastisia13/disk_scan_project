@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-4">Топ 10 документов по количеству страниц</h1>
+        <h1 class="mt-4">Топ 10  документов по количеству страниц</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -20,7 +20,7 @@
                 {% for doc in largest_docs %}
                     <tr>
                         <td>{{ doc.name }}</td>
-                        <td>{{ doc.num_pages }}</td>
+                        <td>{{ doc.pages }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

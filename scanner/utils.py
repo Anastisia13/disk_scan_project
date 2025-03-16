@@ -23,6 +23,7 @@ def scan_directory(directory):
             file_path = os.path.join(root, file)
             file_size = os.path.getsize(file_path)
             file_ext = os.path.splitext(file)[1].lower().strip('.')
+            file_name = os.path.basename(file_path)
 
             width = height = pages = None
 
@@ -34,7 +35,7 @@ def scan_directory(directory):
                     with Image.open(file_path) as img:
                         width, height = img.size
                         logger.info(f"Изображение: {file_path}, ширина: {width}, высота: {height}")           
-     except Exception as e:
+                except Exception as e:
                     logger.error(f"Ошибка при обработке изображения {file_path}: {e}")
 
             elif file_ext == 'pdf':
@@ -46,14 +47,16 @@ def scan_directory(directory):
                 except Exception as e:
                     logger.error(f"Ошибка при обработке PDF {file_path}: {e}")
 
-            File.objects.create(
-                path=file_path,
-                size=file_size,
-                extension=file_ext,
-                width=width,
-                height=height,
-                pages=pages
-            )
-           logger.info(f"Данные о файле {file_path} успешно сохранены в базу данных.")
-       except Exception as e:
-           logger.error(f"Ошибка при сохранении данных файла {file_path} в базу данных: {e}")
+            try:
+                File.objects.create(
+                    name=file_name,
+                    path=file_path,
+                    size=file_size,
+                    extension=file_ext,
+                    width=width,
+                    height=height,
+                    pages=pages
+                )
+                logger.info(f"Данные о файле {file_path} успешно сохранены в базу данных.")
+            except Exception as e:
+                logger.error(f"Ошибка при сохранении данных файла {file_path} в базу данных: {e}")

@@ -26,5 +26,9 @@ def top_images(request):
 
 def top_documents(request):
     documents = File.objects.filter(extension__in=['pdf', 'docx']).exclude(pages__isnull=True).order_by('-pages')[:10]
-    return render(request, 'scanner/top_documents.html', {'documents': documents})
+    return render(request, 'scanner/top_documents.html', {'largest_docs': documents})
+
+def file_list(request):
+    files = File.objects.all()  # Получаем файлы
+    return render(request, 'scanner/file_list.html', {'files': files})  # Передаем в шаблон
 
